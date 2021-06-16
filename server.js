@@ -1,5 +1,7 @@
+//Dependencies
 const app = require("./app");
 
+//Configuration
 require("dotenv").config();
 
 //Port
