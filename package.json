@@ -1,0 +1,32 @@
+{
+  "name": "project-budgeting-app-api-source-code",
+  "version": "1.0.0",
+  "engines": {
+    "node": "15.4.0"
+  },
+  "description": "budgeting app api",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dumin1120/project-budgeting-app-api-source-code.git"
+  },
+  "keywords": [
+    "budgeting",
+    "api"
+  ],
+  "author": "Du Min Chen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dumin1120/project-budgeting-app-api-source-code/issues"
+  },
+  "homepage": "https://github.com/Dumin1120/project-budgeting-app-api-source-code#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  }
+}
