@@ -8,23 +8,23 @@ module.exports = [
     },
     {
         date: "6/14/21",
-        name: "Spend",
-        amount: 2.99,
-        from: "Bought a coffee",
+        name: "Bought a coffee",
+        amount: -2.99,
+        from: "Spend",
         id: "bbaa"
     },
     {
         date: "6/15/21",
-        name: "Spend",
-        amount: 1.99,
-        from: "Bought a tea",
+        name: "Bought a tea",
+        amount: -1.99,
+        from: "Spend",
         id: "abab"
     },
     {
         date: "6/16/21",
-        name: "Spend",
-        amount: 3.99,
-        from: "Bought a cupcake",
+        name: "Bought a cupcake",
+        amount: -3.99,
+        from: "Spend",
         id: "baba"
     }
 ]
