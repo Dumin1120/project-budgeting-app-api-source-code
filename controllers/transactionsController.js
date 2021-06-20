@@ -15,6 +15,13 @@ const dataVerification = (req, res, next) => {
         return passedObj;
     }
 
+    const checkNameEmpty = (nameStr) => {
+        if (!nameStr.trim())
+            return { passed: false, invalid: "name can not be empty or spaces." }
+
+        return passedObj;
+    }
+
     const checkInputDateValid = (dateStr) => {
         const dateArr = dateStr.split("/");
         if (dateArr.length !== 3)
@@ -49,10 +56,7 @@ const dataVerification = (req, res, next) => {
             case "02":
                 const year = 2000 + numYear;
                 const leapYear = year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
-                if (leapYear)
-                    return validDay(1, 29);
-                
-                return validDay(1, 28);
+                return leapYear ? validDay(1, 29) : validDay(1, 28);
             default:
                 return { passed: false, invalid: "invalid month." };
         }
@@ -71,7 +75,7 @@ const dataVerification = (req, res, next) => {
 
     const checkTransaction = (inputObj, index) => {
         if (Object.keys(inputObj).length !== REQURE_INPUT_OBJECT_PAIRS)
-            return res.status(400).json(`Key at index ${index}, there are missing or additional pairs (key/value). Please submit again with correct pairs.`);
+            return res.status(400).json(`Keys at index ${index}, there are missing or additional pairs (key/value). Please submit again with correct format.`);
 
         const { date, name, amount, from } = inputObj;
         let result = checkInputDataType("string", { date, name, from });
@@ -81,7 +85,11 @@ const dataVerification = (req, res, next) => {
         result = checkInputDataType("number", { amount });
         if (!result.passed)
             return res.status(400).json(`Key ${result.invalid} at index ${index}, it is missing or its value is not a number.`);
-        
+
+        result = checkNameEmpty(name)
+        if (!result.passed)
+            return res.status(400).json(`Key name at index ${index}, ${result.invalid}`);
+    
         result = checkInputDateValid(date);
         if (!result.passed)
             return res.status(400).json(`Key date at index ${index}, ${result.invalid}`);
@@ -95,11 +103,13 @@ const dataVerification = (req, res, next) => {
 
     const inputData = req.body;
     if (!inputData.length) {
+        delete inputData.id;
         const result = checkTransaction(inputData, 0);
         return result === "passed" ? next() : null;
     }
 
     for (let i = 0; i < inputData.length; i++) {
+        delete inputData[i].id;
         const result = checkTransaction(inputData[i], i);
         if (result !== "passed")
             return null;
