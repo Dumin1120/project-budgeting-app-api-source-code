@@ -20,8 +20,8 @@ const dataVerification = (req, res, next) => {
         if (dateArr.length !== 3)
             return { passed: false, invalid: "invalid date format, please use mm/dd/yy." };
 
-        for (let i = 0; i < dateArr.length; i++) {
-            if (dateArr[i].length !== 2)
+        for (const value of dateArr) {
+            if (value.length !== 2)
                 return { passed: false, invalid: "invalid date format, please use mm/dd/yy." };
         }
 
@@ -31,6 +31,7 @@ const dataVerification = (req, res, next) => {
 
         const invalidDayObj = { passed: false, invalid: "invalid day." };
         const numDay = Number(dateArr[1]);
+        const validDay = (min, max) => numDay >= min && numDay <= max ? passedObj : invalidDayObj;
         switch (dateArr[0]) {
             case "01":
             case "03":
@@ -39,31 +40,19 @@ const dataVerification = (req, res, next) => {
             case "08":
             case "10":
             case "12":
-                if (numDay >= 1 && numDay <= 31)
-                    return passedObj;
-                
-                return invalidDayObj;
+                return validDay(1, 31);
             case "04":
             case "06":
             case "09":
             case "11":
-                if (numDay >= 1 && numDay <= 30)
-                    return passedObj;
-                
-                return invalidDayObj;
+                return validDay(1, 30);
             case "02":
                 const year = 2000 + numYear;
                 const leapYear = year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
-                if (leapYear) {
-                    if (numDay >= 1 && numDay <= 29)
-                        return passedObj;
-
-                    return invalidDayObj;
-                }
-                if (numYear >= 1 && numYear <= 28)
-                    return passedObj;
-
-                return invalidDayObj;
+                if (leapYear)
+                    return validDay(1, 29);
+                
+                return validDay(1, 28);
             default:
                 return { passed: false, invalid: "invalid month." };
         }
@@ -74,13 +63,10 @@ const dataVerification = (req, res, next) => {
             return { passed: false, invalid: "invalid number or the number exceeds range." };
 
         const decimalPart = num.toString().split(".")[1];
-        if (!decimalPart)
+        if (!decimalPart || decimalPart.length <= 2)
             return passedObj;
 
-        if (decimalPart.length > 2)
-            return { passed: false, invalid: "invalid decimal digits, only 2 or less are allowed." };
-
-        return passedObj;
+        return { passed: false, invalid: "invalid decimal digits, more than 2 is not allowed." };
     }
 
     const checkTransaction = (inputObj, index) => {
@@ -96,7 +82,7 @@ const dataVerification = (req, res, next) => {
         if (!result.passed)
             return res.status(400).json(`Key ${result.invalid} at index ${index}, it is missing or its value is not a number.`);
         
-        result= checkInputDateValid(date);
+        result = checkInputDateValid(date);
         if (!result.passed)
             return res.status(400).json(`Key date at index ${index}, ${result.invalid}`);
 

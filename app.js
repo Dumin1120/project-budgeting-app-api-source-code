@@ -12,7 +12,7 @@ app.use(express.json());
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Welcome to my budgeting app api, endpoints documentation pending...");
 });
 
 app.use("/transactions", transactionsController);
