@@ -62,7 +62,7 @@ When sending a request to post one transaction, sending a json object {} or an a
 
 See `GET` endpoint for actual link examples
 
-When sending a request to update one transaction, sending a json object {} or an array of an object [{}] is allowed. When updating more than one tranction, separate ids by comma ",". And data is required to be an array of objects, each object has be in a specific format, please refer to `POST` endpoint for format restrictions.
+When sending a request to update one transaction, sending a json object {} or an array of an object [{}] is allowed. When updating more than one tranction, separate ids by comma ",". And data is required to be an array of objects, each object has to be in a specific format, please refer to `POST` endpoint for format restrictions.
 
 ### `DELETE`
 `https://dumin1120-proj-budgeting-app.herokuapp.com/transactions/{ids}`
