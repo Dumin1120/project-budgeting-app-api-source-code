@@ -17,7 +17,7 @@ const dataVerification = (req, res, next) => {
 
     const checkNameEmpty = (nameStr) => {
         if (!nameStr.trim())
-            return { passed: false, invalid: "name can not be empty or spaces." }
+            return { passed: false, invalid: "name can not be empty or spaces." };
 
         return passedObj;
     }
@@ -86,7 +86,7 @@ const dataVerification = (req, res, next) => {
         if (!result.passed)
             return res.status(400).json(`Key ${result.invalid} at index ${index}, it is missing or its value is not a number.`);
 
-        result = checkNameEmpty(name)
+        result = checkNameEmpty(name);
         if (!result.passed)
             return res.status(400).json(`Key name at index ${index}, ${result.invalid}`);
     

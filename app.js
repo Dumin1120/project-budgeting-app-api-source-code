@@ -1,6 +1,7 @@
 // Dependencies
 const express = require("express");
 const cors = require("cors");
+const path = require("path"); // used tutorial to send html file at https://www.digitalocean.com/community/tutorials/use-expressjs-to-deliver-html-files
 
 // Configuration
 const app = express();
@@ -12,7 +13,7 @@ app.use(express.json());
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("Welcome to my budgeting app api, endpoints documentation pending...");
+  res.sendFile(path.join(__dirname, "/doc.html"));
 });
 
 app.use("/transactions", transactionsController);

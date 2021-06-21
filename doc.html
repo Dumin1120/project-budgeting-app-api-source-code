@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget App Document</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .crud {
+            display: inline-block;
+            text-transform: uppercase;
+            background-color: rgba(0,116,236,.93);
+            color: #fff;
+            border-radius: 3px;
+            padding: 4px 10px;
+        }
+        .endpoint {
+            display: inline-block;
+            background-color: rgba(1,1,1,.3);
+            border: none;
+            border-radius: 5px;
+            padding: 3px 6px;
+        }
+        .example {
+            background-color: rgba(1,1,1,.2);
+            border: none;
+            border-radius: 5px;
+            padding: 3px 6px;
+        }
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2 class="center">Welcome to my Budgeting App API !</h2>
+    <h3>Endpoints</h3>
+    <h3 class="crud">GET</h3>
+    <h3 class="endpoint">https://dumin1120-proj-budgeting-app.herokuapp.com/transactions/</h3>
+    <h4>For all transactions</h4>
+    <p>This will return all transactions, an array of objects.</p>
+    <pre>
+    [
+        {
+            "date": "06/13/21",
+            "name": "Deposit",
+            "amount": 100,
+            "from": "Paycheck",
+            "id": "aabb"
+        },
+        {
+            "date": "06/14/21",
+            "name": "Bought coffee",
+            "amount": -2.99,
+            "from": "Spend",
+            "id": "bbaa"
+        },
+        ...
+    ]
+    </pre>
+    <h3 class="crud" id="GETexamples">GET</h3>
+    <h3 class="endpoint">https://dumin1120-proj-budgeting-app.herokuapp.com/transactions/{ids}</h3>
+    <h4>For one or more transactions</h4>
+    <p>Example one transaction: &nbsp;<span class="example">https://dumin1120-proj-budgeting-app.herokuapp.com/transactions/aabb</span></p>
+    <p>Example two transactions: <span class="example">https://dumin1120-proj-budgeting-app.herokuapp.com/transactions/aabb,bbaa</span></p>
+    <p>This will return transactions found with corresponding ids, an array of object(s). When sending a request for more than one, separate the ids by comma ",".</p>
+    <p>If requesting one transaction and id is not found, a 404 error will return. If requesting more than one transaction, and no id found, no error will return, an empty array will return instead.</p>
+    <br />
+    <h3 class="crud" id="POSTrestrictions">POST</h3>
+    <h3 class="endpoint">https://dumin1120-proj-budgeting-app.herokuapp.com/transactions/</h3>
+    <p>When sending a request to post one transaction, sending a json object {} or an array of an object [{}] is allowed. When posting more than one transaction, it is required to be an array of objects.</p>
+    <p>Each object is required to be in this format, restrict to 4 key/value pairs:</p>
+    <pre>
+    {
+        "date": "string type, in mm/dd/yy format only and it is a valid date after 2020",
+        "name": "string type, can not be empty or only spaces",
+        "amount": number type, positive or negative, can not exceed safe range, can not exceed 2 decimal digits,
+        "from": "string type, key has to be exist inside object, optional value, can be left as empty string"
+    }
+    </pre>
+    <br />
+    <h3 class="crud">PUT</h3>
+    <h3 class="endpoint">https://dumin1120-proj-budgeting-app.herokuapp.com/transactions/{ids}</h3>
+    <p>See <a href=#GETexamples>GET endpoint</a> for actual link examples</p>
+    <p>When sending a request to update one transaction, sending a json object {} or an array of an object [{}] is allowed. When updating more than one tranction, separate ids by comma ",".</p>
+    <p>And data is required to be an array of objects, each object has be in a specific format, please refer to <a href=#POSTrestrictions>POST endpoint</a> for format restrictions.</p>
+    <br />
+    <h3 class="crud">DELETE</h3>
+    <h3 class="endpoint">https://dumin1120-proj-budgeting-app.herokuapp.com/transactions/{ids}</h3>
+    <p>See <a href=#GETexamples>GET endpoint</a> for actual link examples</p>
+    <p>When sending a request to delete more than one tranction, separate ids by comma ",".</p>
+</body>
+</html>
